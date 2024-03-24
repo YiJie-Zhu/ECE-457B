@@ -56,10 +56,12 @@ variance_list = []
 for k in k_list:
     centres = []
     for _ in range(k):
-        centres.append([random.uniform(-1.2, 1.2), random.uniform(-1.2, 1.2)])
+        centres.append([random.uniform(-1, 1), random.uniform(-1, 1)])
     print(centres)
 
     points_assignment = defaultdict(list)
+
+    # Continues until the location of centres converge
     while True:
 
         for p in X:
@@ -72,17 +74,56 @@ for k in k_list:
         changed = False
         for i, points in points_assignment.items():
             new_c = update_centre(points)
-            changed = changed or compare_centre_diff(new_c, centres[i], 0.001)
+            changed = changed or compare_centre_diff(new_c, centres[i], 0.001) # Checks if the location of the centres have converged
             centres[i] = new_c
 
         if not changed:
             break
+        points_assignment = defaultdict(list)
     print(centres)
-    variance_list.append(1 - calc_variance(points_assignment, centres))
+    variance_list.append(1 - calc_variance(points_assignment, centres)) # total variance is the sum of variance for all points and their assigned centroid
 
 plt.plot(k_list, variance_list)
 plt.show()
 
+# k=5
+
+k = 5
+centres = []
+for _ in range(k):
+    centres.append([random.uniform(-1, 1), random.uniform(-1, 1)])
+print(centres)
+
+points_assignment = defaultdict(list)
+
+# Continues until the location of centres converge
+while True:
+
+    for p in X:
+        dist_from_centres = []
+        for c in centres:
+            dist_from_centres.append(dist(p, c))
+
+        points_assignment[np.argmin(dist_from_centres)].append(p)
+
+    changed = False
+    for i, points in points_assignment.items():
+        new_c = update_centre(points)
+        changed = changed or compare_centre_diff(new_c, centres[i], 0.001) # Checks if the location of the centres have converged
+        centres[i] = new_c
+
+    if not changed:
+        break
+
+    points_assignment = defaultdict(list)
+
+plt.figure(2)
+for i, points in points_assignment.items():
+    points_np = np.array(points)
+    plt.scatter(points_np[:, 0], points_np[:, 1], s=10)
+
+plt.show()
+print(points_assignment)
 
 
     
