@@ -6,7 +6,6 @@ from matplotlib import pyplot as plt
 
 np.set_printoptions(threshold=3000)
 
-
 # Load MNIST dataset.
 X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
 X = np.array(X)
