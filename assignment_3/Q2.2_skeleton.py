@@ -87,7 +87,6 @@ plt.plot(k_list, variance_list)
 plt.show()
 
 # k=5
-
 k = 5
 centres = []
 for _ in range(k):
