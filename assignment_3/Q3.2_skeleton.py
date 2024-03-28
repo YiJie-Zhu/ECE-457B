@@ -4,8 +4,6 @@ import numpy as np
 import heapq
 from matplotlib import pyplot as plt
 
-np.set_printoptions(threshold=3000)
-
 
 # Load MNIST dataset.
 X, y = fetch_openml("mnist_784", version=1, return_X_y=True, as_frame=False)
@@ -21,7 +19,7 @@ e_vals, e_vecs = np.linalg.eig(cov)
 
 u_k = e_vecs[:, :2]
 
-z_bar = np.dot(u_k.transpose(), X_bar.transpose()).transpose() # transpose z_bar to make ti easier to work with
+z_bar = np.dot(u_k.transpose(), X_bar.transpose()).transpose() # transpose z_bar to make it easier to work with
 
 # Visualize the data distribution of digits '0', '1' and '3' in a 2D scatter plot.
 digits = ['0', '1', '3']
@@ -42,7 +40,7 @@ image_3 = 1 - rep_3.reshape(28,28) # inversing colour to make shape more clear
 
 plt.figure(2)
 
-plt.imshow(image_3, cmap='gray')
+plt.imshow(np.real(image_3), cmap='gray')
 plt.show()
 
 
